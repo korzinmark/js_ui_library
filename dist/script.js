@@ -119,6 +119,44 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.find = function (selecto
   }
   return this;
 };
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.closest = function (selector) {
+  let counter = 0;
+  for (let i = 0; i < this.length; i++) {
+    if (this[i].closest(selector) == null) {
+      return this;
+    } else {
+      this[i] = this[i].closest(selector);
+      counter++;
+    }
+  }
+  const objLenght = Object.keys(this).length;
+  for (; counter < objLenght; counter++) {
+    delete this[counter];
+  }
+  return this;
+};
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.siblings = function () {
+  let numberOfItems = 0;
+  let counter = 0;
+  const copyObj = Object.assign({}, this);
+  for (let i = 0; i < copyObj.length; i++) {
+    const arr = copyObj[i].parentElement.children;
+    for (let j = 0; j < arr.length; j++) {
+      if (copyObj[i] === arr[j]) {
+        continue;
+      }
+      this[counter] = arr[j];
+      counter++;
+    }
+    numberOfItems += arr.length - 1;
+  }
+  this.length = numberOfItems;
+  const objLenght = Object.keys(this).length;
+  for (; numberOfItems < objLenght; numberOfItems++) {
+    delete this[numberOfItems];
+  }
+  return this;
+};
 
 /***/ }),
 
@@ -348,7 +386,11 @@ __webpack_require__.r(__webpack_exports__);
 (0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').click(function () {
   console.log((0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])(this).index());
 });
-console.log((0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').eq(2).find('.more'));
+
+// console.log($('div').eq(2).find('.more'));
+// console.log($('.some').closest('.findmee'));
+
+console.log((0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.findme').siblings());
 })();
 
 /******/ })()
